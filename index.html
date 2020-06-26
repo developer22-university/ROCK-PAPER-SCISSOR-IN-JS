@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>ROCK-PAPER-SCISSOR</title>
+    <script>
+    	function rand_bg_color(){
+
+var x=Math.floor(Math.random()*256);
+var y=Math.floor(Math.random()*256);
+var z=Math.floor(Math.random()*256);
+var bgcolor="rgb("+x+","+y+","+z+")";
+document.body.style.backgroundPosition = 'center center';
+document.body.style.background = 'bgColor';}
+	rand_bg_color();
+    </script>
+<style>
+	body{
+color: white;
+display:flex;
+flex-direction:column ;
+justify-content: center;
+align-items: center;
+align-content: center; 
+background-image: url(Pictures/bac1.jfif);
+background-color: #4CAF50;
+height:500px;
+background-size: cover;
+	}
+
+.button{
+background-color: red; /* Green */
+opacity:20;
+  border: yellow;
+  color: white;
+  padding: 25px 42px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+
+}
+.relative {
+ padding: 10px;
+ position: relative;
+ background-color: pink;
+ margin: 10px;
+} 
+h2{
+	color:lightblue;
+}
+</style>
+</head>
+<body>
+	<p style='font-size:100px'>
+	<h1>ROCK &#128512; PAPER &#128522; SCISSOR </h1>
+	<h2 >Relive The Old Childhood Memories &#128540;</h2>
+</p>
+<p><h4>Select ROCK,PAPER,SCISSOR and Try to beat the computer</h4></p>
+<p style='font-size:30px'><strong>&#128526; Remember:</strong>"Rock breaks Scissor, Scissor breaks Paper,Paper breaks Rock"</p>
+<div class='score'>
+</div>
+<div class='message'>
+</div>
+<div class='relative'>
+<p>
+<button class='button'>Rock</button>
+<button class='button'>Paper</button>
+<button class='button'>Scissor</button>
+</p>
+</div>
+
+<script>
+ const message = document.querySelector('.message');
+        const score = document.querySelector('.score');
+        const buttons = document.querySelectorAll('button');
+        const winnerScores = [0,0];
+        
+        //add event listeners to buttons
+        for ( let i = 0 ; i < buttons.length ; i++){
+            buttons[i].addEventListener('click', playGame);
+        }
+
+        function playGame(e){
+            //setup player's selection
+            let playerSelection = e.target.innerText;
+            //setup a random number to select for computer
+            //selects a number between 0 and 1 (1 not-inclusive)
+            let computerSelection = Math.random();
+
+            //if computerSelection is less than .34, computer selects Rock
+            if (computerSelection < .34){
+                computerSelection = 'Rock';
+            } else if (computerSelection <= .67){
+                computerSelection = 'Paper';
+            } else {
+                computerSelection = 'Scissors';
+            }
+            
+            //setup a function to compare winners and return result
+            let result = checkWinner(playerSelection, computerSelection);
+
+            //output scores to the DOM
+            if (result === 'Player'){
+                result += ' wins!';
+                //update score
+                winnerScores[0]++;
+            }
+
+            else if(result === 'Computer'){
+                result += ' wins!';
+                winnerScores[1]++;
+            }
+
+            else if (result === 'Draw'){
+                result += ' It\'s a tie!';
+            }
+             
+
+            //output score into Score DIV
+            score.innerHTML = 'Player: [ ' + winnerScores[0]+ ' ] Computer: [ ' + winnerScores[1] + ' ]';
+
+            //output player and computer's selections
+         messenger('Player: <strong>' + playerSelection + '</strong> Computer: <strong>' + computerSelection + '</strong><br><br><centre>' + result +'</centre>');
+        }
+
+        function messenger(selectionMessage){
+            message.innerHTML = selectionMessage;
+        }
+
+        function checkWinner(player, computer){
+            if (player === computer){
+                return 'Draw';
+            }
+
+            if (player === 'Rock'){
+                if(computer === 'Paper'){
+                    return 'Computer';
+                } else {
+                    return 'Player';
+                }
+            }
+
+            if (player === 'Paper'){
+                if (computer === 'Scissors'){
+                    return 'Computer';
+                } else {
+                    return 'Player';
+                }
+            }
+
+            if (player === 'Scissor'){
+                if (computer === 'Rock'){
+                    return 'Computer';
+                } else {
+                    return 'Player';
+                }
+            }
+        }
+
+</script>
+</body>
+</html>
+
